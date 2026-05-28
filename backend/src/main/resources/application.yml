@@ -1,10 +1,11 @@
 spring:
   application:
     name: techstore
+  config:
+    import: nacos:techstore.yml?refresh=true
   cloud:
     nacos:
       config:
         server-addr: ${NACOS_ADDR:119.29.145.64:8848}
-        namespace: ${NACOS_NAMESPACE:}
-        group: DEFAULT_GROUP
-        file-extension: yml
+        username: nacos
+        password: nacos
