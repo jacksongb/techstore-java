@@ -1,0 +1,46 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: techstore-backend
+    restart: unless-stopped
+    environment:
+      - MYSQL_HOST=rm-wz99s2n5si79p245evo.mysql.rds.aliyuncs.com
+      - MYSQL_PORT=3306
+      - MYSQL_USER=nacos
+      - MYSQL_PASSWORD=nacos123
+      - REDIS_HOST=redis-master
+      - REDIS_PORT=6379
+      - KAFKA_SERVERS=119.29.145.64:9092
+    ports:
+      - "8080:8080"
+    networks:
+      - middleware-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: techstore-frontend
+    restart: unless-stopped
+    networks:
+      - middleware-net
+
+  nginx:
+    image: nginx:alpine
+    container_name: techstore-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - middleware-net
+
+networks:
+  middleware-net:
+    external: true
