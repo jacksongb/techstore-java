@@ -20,7 +20,7 @@ export async function fetchProduct(id: number): Promise<Product | undefined> {
   return mockProducts.find((p) => p.id === id)
 }
 
-export async function fetchOrders() {
+export async function fetchOrders(): Promise<any[]> {
   await delay(300)
   return mockOrders
 }
