@@ -14,13 +14,11 @@ public class UserController {
 
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody Map<String, String> body) {
-        String token = userService.login(body.get("username"), body.get("password"));
-        return Map.of("token", token, "user", Map.of("username", body.get("username")));
+        return userService.login(body.get("username"), body.get("password"));
     }
 
     @PostMapping("/register")
     public Map<String, Object> register(@RequestBody Map<String, String> body) {
-        String token = userService.register(body.get("username"), body.get("password"));
-        return Map.of("token", token, "user", Map.of("username", body.get("username")));
+        return userService.register(body.get("username"), body.get("password"));
     }
 }

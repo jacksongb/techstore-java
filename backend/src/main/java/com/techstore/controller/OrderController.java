@@ -23,10 +23,12 @@ public class OrderController {
         if (username == null) {
             throw new RuntimeException("未登录");
         }
+        Long userId = userService.getUserIdByUsername(username);
         return orderService.createOrder(
-                Long.valueOf(body.get("userId").toString()),
+                userId,
                 Long.valueOf(body.get("productId").toString()),
                 (String) body.get("productName"),
+                (String) body.get("productImage"),
                 (Integer) body.get("quantity"),
                 Double.valueOf(body.get("total").toString())
         );
@@ -39,6 +41,7 @@ public class OrderController {
         if (username == null) {
             throw new RuntimeException("未登录");
         }
-        return orderService.getUserOrders(1L);
+        Long userId = userService.getUserIdByUsername(username);
+        return orderService.getUserOrders(userId);
     }
 }

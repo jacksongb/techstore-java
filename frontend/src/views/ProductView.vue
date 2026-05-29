@@ -35,7 +35,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ShoppingCart } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
-import { fetchProduct } from '@/api'
+import { fetchProduct, createOrder } from '@/api'
 import { useCartStore } from '@/stores/cart'
 import { useUserStore } from '@/stores/user'
 import type { Product } from '@/stores/product'
@@ -65,15 +65,26 @@ function addToCart() {
   ElMessage.success(`已添加 ${quantity.value} 件到购物车`)
 }
 
-function buyNow() {
+async function buyNow() {
   if (!userStore.isLoggedIn) {
     ElMessage.warning('请先登录')
     router.push('/login')
     return
   }
-  addToCart()
-  ElMessage.success('订单创建成功！（Mock）')
-  quantity.value = 1
+  if (!product.value) return
+  try {
+    await createOrder(
+      product.value.id,
+      product.value.name,
+      product.value.image,
+      quantity.value,
+      product.value.price * quantity.value,
+    )
+    ElMessage.success('订单创建成功！')
+    router.push('/orders')
+  } catch {
+    ElMessage.error('订单创建失败，请重试')
+  }
 }
 </script>
 

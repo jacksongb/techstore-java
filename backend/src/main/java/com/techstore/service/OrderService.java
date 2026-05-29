@@ -16,12 +16,13 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public Order createOrder(Long userId, Long productId, String productName, Integer quantity, Double total) {
+    public Order createOrder(Long userId, Long productId, String productName, String productImage, Integer quantity, Double total) {
         Order order = new Order();
         order.setOrderId("ORD" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + productId);
         order.setUserId(userId);
         order.setProductId(productId);
         order.setProductName(productName);
+        order.setProductImage(productImage);
         order.setQuantity(quantity);
         order.setTotal(total);
         order.setStatus("待支付");

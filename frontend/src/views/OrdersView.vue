@@ -6,14 +6,14 @@
       <div v-else class="order-list">
         <el-card v-for="order in orders" :key="order.id" class="order-card" shadow="hover">
           <div class="order-header">
-            <span class="order-id">{{ order.id }}</span>
+            <span class="order-id">{{ order.orderId }}</span>
             <el-tag :type="statusType(order.status)">{{ order.status }}</el-tag>
           </div>
           <div class="order-body">
-            <img :src="order.product.image" class="order-image" />
+            <img :src="order.productImage" class="order-image" />
             <div class="order-info">
-              <div class="order-name">{{ order.product.name }}</div>
-              <div class="order-meta">x{{ order.quantity }} &nbsp; {{ order.time }}</div>
+              <div class="order-name">{{ order.productName }}</div>
+              <div class="order-meta">x{{ order.quantity }} &nbsp; {{ order.createTime }}</div>
             </div>
             <div class="order-total">¥{{ order.total.toLocaleString() }}</div>
           </div>
@@ -32,8 +32,13 @@ const loading = ref(false)
 
 async function load() {
   loading.value = true
-  orders.value = await fetchOrders()
-  loading.value = false
+  try {
+    orders.value = await fetchOrders()
+  } catch {
+    orders.value = []
+  } finally {
+    loading.value = false
+  }
 }
 
 onMounted(load)
@@ -41,6 +46,8 @@ onMounted(load)
 function statusType(status: string) {
   const map: Record<string, string> = {
     '待支付': 'warning',
+    '处理中': 'info',
+    '已支付': 'success',
     '已发货': 'primary',
     '已完成': 'success',
     '已取消': 'info',
