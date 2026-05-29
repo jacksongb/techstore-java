@@ -43,21 +43,28 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    private Product createProduct(String name, double price, String image, String category, String desc, int stock, double rating, int sales) {
+        Product p = new Product();
+        p.setName(name); p.setPrice(price); p.setImage(image); p.setCategory(category);
+        p.setDescription(desc); p.setStock(stock); p.setRating(rating); p.setSales(sales);
+        return p;
+    }
+
     public void initData() {
         if (productRepository.count() == 0) {
             productRepository.saveAll(List.of(
-                new Product() {{ setName("MacBook Pro 14\""); setPrice(14999.0); setImage("https://picsum.photos/seed/p1/400/400"); setCategory("电脑"); setDescription("Apple M3 Pro 芯片，18GB 内存，512GB 固态硬盘"); setStock(50); setRating(4.9); setSales(2300); }},
-                new Product() {{ setName("iPhone 16 Pro Max"); setPrice(9999.0); setImage("https://picsum.photos/seed/p2/400/400"); setCategory("手机"); setDescription("A18 Pro 芯片，钛金属设计，4800 万像素主摄"); setStock(200); setRating(4.8); setSales(5600); }},
-                new Product() {{ setName("AirPods Pro 2"); setPrice(1899.0); setImage("https://picsum.photos/seed/p3/400/400"); setCategory("耳机"); setDescription("自适应音频，个性化空间音频，USB-C 充电盒"); setStock(300); setRating(4.7); setSales(8900); }},
-                new Product() {{ setName("iPad Air M2"); setPrice(4799.0); setImage("https://picsum.photos/seed/p4/400/400"); setCategory("平板"); setDescription("M2 芯片，11 英寸 Liquid Retina 显示屏"); setStock(80); setRating(4.8); setSales(3200); }},
-                new Product() {{ setName("Sony WH-1000XM5"); setPrice(2499.0); setImage("https://picsum.photos/seed/p5/400/400"); setCategory("耳机"); setDescription("业界领先降噪，30 小时续航，多点连接"); setStock(120); setRating(4.6); setSales(4100); }},
-                new Product() {{ setName("Samsung Galaxy S24 Ultra"); setPrice(9699.0); setImage("https://picsum.photos/seed/p6/400/400"); setCategory("手机"); setDescription("骁龙 8 Gen 3，2 亿像素，S Pen 内置"); setStock(150); setRating(4.7); setSales(3800); }},
-                new Product() {{ setName("Apple Watch Ultra 2"); setPrice(5999.0); setImage("https://picsum.photos/seed/p7/400/400"); setCategory("手表"); setDescription("S9 芯片，49mm 钛金属表壳，双频 GPS"); setStock(60); setRating(4.9); setSales(1500); }},
-                new Product() {{ setName("DJI Mini 4 Pro"); setPrice(5788.0); setImage("https://picsum.photos/seed/p8/400/400"); setCategory("数码"); setDescription("4K/60fps HDR 视频，全向避障，34 分钟续航"); setStock(40); setRating(4.8); setSales(980); }},
-                new Product() {{ setName("Nintendo Switch OLED"); setPrice(2349.0); setImage("https://picsum.photos/seed/p9/400/400"); setCategory("游戏"); setDescription("7 英寸 OLED 屏幕，64GB 存储"); setStock(100); setRating(4.6); setSales(7200); }},
-                new Product() {{ setName("Logitech MX Master 3S"); setPrice(799.0); setImage("https://picsum.photos/seed/p10/400/400"); setCategory("配件"); setDescription("8K DPI 传感器，静音点击，三设备切换"); setStock(500); setRating(4.7); setSales(11000); }},
-                new Product() {{ setName("LG 27GP950"); setPrice(4299.0); setImage("https://picsum.photos/seed/p11/400/400"); setCategory("电脑"); setDescription("27 英寸 4K Nano IPS，144Hz，HDMI 2.1"); setStock(30); setRating(4.5); setSales(620); }},
-                new Product() {{ setName("Kindle Paperwhite 5"); setPrice(999.0); setImage("https://picsum.photos/seed/p12/400/400"); setCategory("数码"); setDescription("6.8 英寸 300ppi，可调暖光，IPX8 防水"); setStock(400); setRating(4.8); setSales(15000); }}
+                createProduct("MacBook Pro 14\"", 14999, "https://picsum.photos/seed/p1/400/400", "电脑", "Apple M3 Pro 芯片，18GB 内存，512GB 固态硬盘", 50, 4.9, 2300),
+                createProduct("iPhone 16 Pro Max", 9999, "https://picsum.photos/seed/p2/400/400", "手机", "A18 Pro 芯片，钛金属设计，4800 万像素主摄", 200, 4.8, 5600),
+                createProduct("AirPods Pro 2", 1899, "https://picsum.photos/seed/p3/400/400", "耳机", "自适应音频，个性化空间音频，USB-C 充电盒", 300, 4.7, 8900),
+                createProduct("iPad Air M2", 4799, "https://picsum.photos/seed/p4/400/400", "平板", "M2 芯片，11 英寸 Liquid Retina 显示屏", 80, 4.8, 3200),
+                createProduct("Sony WH-1000XM5", 2499, "https://picsum.photos/seed/p5/400/400", "耳机", "业界领先降噪，30 小时续航，多点连接", 120, 4.6, 4100),
+                createProduct("Samsung Galaxy S24 Ultra", 9699, "https://picsum.photos/seed/p6/400/400", "手机", "骁龙 8 Gen 3，2 亿像素，S Pen 内置", 150, 4.7, 3800),
+                createProduct("Apple Watch Ultra 2", 5999, "https://picsum.photos/seed/p7/400/400", "手表", "S9 芯片，49mm 钛金属表壳，双频 GPS", 60, 4.9, 1500),
+                createProduct("DJI Mini 4 Pro", 5788, "https://picsum.photos/seed/p8/400/400", "数码", "4K/60fps HDR 视频，全向避障，34 分钟续航", 40, 4.8, 980),
+                createProduct("Nintendo Switch OLED", 2349, "https://picsum.photos/seed/p9/400/400", "游戏", "7 英寸 OLED 屏幕，64GB 存储", 100, 4.6, 7200),
+                createProduct("Logitech MX Master 3S", 799, "https://picsum.photos/seed/p10/400/400", "配件", "8K DPI 传感器，静音点击，三设备切换", 500, 4.7, 11000),
+                createProduct("LG 27GP950", 4299, "https://picsum.photos/seed/p11/400/400", "电脑", "27 英寸 4K Nano IPS，144Hz，HDMI 2.1", 30, 4.5, 620),
+                createProduct("Kindle Paperwhite 5", 999, "https://picsum.photos/seed/p12/400/400", "数码", "6.8 英寸 300ppi，可调暖光，IPX8 防水", 400, 4.8, 15000)
             ));
         }
     }
